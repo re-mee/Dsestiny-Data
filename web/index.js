@@ -1,4 +1,3 @@
-// Track the currently active button
 let activeButton = null;
 
 // Attach click handlers to all data buttons
@@ -27,7 +26,11 @@ async function loadData(key, type = 'enums') {
     output.innerHTML = '';
 
     try {
-        const url = `../data/${type}/${key}.json`;
+        let basePath = window.location.pathname;
+        if (!basePath.endsWith('/')) basePath += '/';
+        // Remove index.html if present
+        basePath = basePath.replace(/index\.html$/, '');
+        const url = basePath + `../data/${type}/${key}.json`;
         const res = await fetch(url);
 
         if (!res.ok) {
